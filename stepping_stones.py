@@ -1,8 +1,8 @@
 #  Can a 2-path stones pattern be traversed from first to last? (start from path 1)
+
 # 1: --------              -----    ---
 # 2:      ------------------  -----------
 # Yes!
-
 
 # 1: --------              -----    ---
 # 2:      -----    --------  -----------
@@ -24,5 +24,5 @@ def stepping_stones(path_1: list[tuple[int, int]], path_2: list[tuple[int, int]]
     return False
 
 
-print(stepping_stones([(0, 10), (12, 15), (50, 70)], [(8, 12), (14, 100), (120, 150)])) # False
-print(stepping_stones([(0, 10), (12, 15), (50, 130)], [(8, 12), (14, 100), (120, 150)])) # True
+print(stepping_stones([(0, 10), (12, 15), (50, 70)], [(8, 12), (14, 100), (120, 150)]))  # False
+print(stepping_stones([(0, 10), (12, 15), (50, 130)], [(8, 12), (14, 100), (120, 150)]))  # True
