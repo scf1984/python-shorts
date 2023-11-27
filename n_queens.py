@@ -1,29 +1,36 @@
-def queen_threatens(n, i, j):
-    threatens = set()
-    for k in range(n):
-        threatens.update(((i, k), (k, j), (i - k, j - k), (i - k, j + k), (i + k, j - k), (i + k, j + k)))
-    return threatens
-
-
 def n_queens(n):
-    available_squares = {(i, j) for i in range(n) for j in range(n)}
-    placed_queens = []  # And the not-threatened squares they threaten!
+    available_squares = {(i, j)
+                         for i in range(n)
+                         for j in range(n)}
+    placed_queens = []
 
-    def solve():
+    def get_threatened_squares(queen_square):
+        i, j = queen_square
+        for k in range(n):
+            for square in ((i, k), (i - k, j - k),
+                           (i - k, j + k), (i + k, j - k),
+                           (i + k, j + k), (k, j)):
+                if square in available_squares:
+                    yield square
+
+    def solve(col=0):
         if len(placed_queens) == n:
-            return placed_queens
+            yield tuple(placed_queens)
 
-        for square in available_squares:
-            threatens = queen_threatens(n, *square) & available_squares
+        for square in set(zip(range(n), [col] * n)) & available_squares:
+            threatens = set(get_threatened_squares(square))
+
             available_squares.difference_update(threatens)
             placed_queens.append(square)
-            solved = solve()
-            if solved:
-                return solved
+
+            solution = solve(col + 1)
+            if solution:
+                yield from solution
+
             placed_queens.pop()
             available_squares.update(threatens)
 
-    return solve()
+    yield from solve()
 
 
-print(n_queens(5))
+print(len([*n_queens(8)]))

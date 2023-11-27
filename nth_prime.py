@@ -1,0 +1,1 @@
+# Use sieve and extend its range continually to get nth prime.
